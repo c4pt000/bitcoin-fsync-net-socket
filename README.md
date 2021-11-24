@@ -1,4 +1,7 @@
- Bitcoin Core integration/staging tree
+![s1](https://github.com/c4pt000/bitcoin/releases/download/s_fast/vokoscreen-2021-11-24_12-11-52.gif)
+
+
+Bitcoin Core integration/staging tree
 =====================================
 
 https://bitcoincore.org
