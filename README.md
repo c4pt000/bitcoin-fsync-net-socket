@@ -1,5 +1,6 @@
 ![s1](https://github.com/c4pt000/bitcoin/releases/download/s_fast/vokoscreen-2021-11-24_12-11-52.gif)
 
+# changes live in net.cpp, net.h, net_processing.cpp net_processing.h ^^^^^ of src/
 
 Bitcoin Core integration/staging tree
 =====================================
