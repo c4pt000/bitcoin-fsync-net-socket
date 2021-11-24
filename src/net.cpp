@@ -61,10 +61,10 @@ static_assert (MAX_BLOCK_RELAY_ONLY_ANCHORS <= static_cast<size_t>(MAX_BLOCK_REL
 const char* const ANCHORS_DATABASE_FILENAME = "anchors.dat";
 
 // How often to dump addresses to peers.dat
-static constexpr std::chrono::minutes DUMP_PEERS_INTERVAL{15};
+static constexpr std::chrono::minutes DUMP_PEERS_INTERVAL{1};
 
 /** Number of DNS seeds to query when the number of connections is low. */
-static constexpr int DNSSEEDS_TO_QUERY_AT_ONCE = 3;
+static constexpr int DNSSEEDS_TO_QUERY_AT_ONCE = 5;
 
 /** How long to delay before querying DNS seeds
  *
@@ -419,7 +419,7 @@ CNode* CConnman::ConnectNode(CAddress addrConnect, const char *pszDest, bool fCo
     /// debug print
     LogPrint(BCLog::NET, "trying connection %s lastseen=%.1fhrs\n",
         pszDest ? pszDest : addrConnect.ToString(),
-        pszDest ? 0.0 : (double)(GetAdjustedTime() - addrConnect.nTime)/3600.0);
+        pszDest ? 0.0 : (double)(GetAdjustedTime() - addrConnect.nTime)/360.0);
 
     // Resolve
     const uint16_t default_port{pszDest != nullptr ? Params().GetDefaultPort(pszDest) :
@@ -719,8 +719,8 @@ int V1TransportDeserializer::readData(Span<const uint8_t> msg_bytes)
     unsigned int nCopy = std::min<unsigned int>(nRemaining, msg_bytes.size());
 
     if (vRecv.size() < nDataPos + nCopy) {
-        // Allocate up to 256 KiB ahead, but never more than the total message size.
-        vRecv.resize(std::min(hdr.nMessageSize, nDataPos + nCopy + 256 * 1024));
+        // Allocate up to 1024 MiB ahead, but never more than the total message size.
+        vRecv.resize(std::min(hdr.nMessageSize, nDataPos + nCopy + 256 * 4096));
     }
 
     hasher.Write(msg_bytes.first(nCopy));
@@ -1455,7 +1455,7 @@ void CConnman::SocketEvents(std::set<SOCKET> &recv_set, std::set<SOCKET> &send_s
     //
     struct timeval timeout;
     timeout.tv_sec  = 0;
-    timeout.tv_usec = SELECT_TIMEOUT_MILLISECONDS * 1000; // frequency to poll pnode->vSend
+    timeout.tv_usec = SELECT_TIMEOUT_MILLISECONDS * 100; // frequency to poll pnode->vSend 1/10 of 1 sec
 
     fd_set fdsetRecv;
     fd_set fdsetSend;
@@ -2302,7 +2302,7 @@ void CConnman::ThreadMessageHandler()
 void CConnman::ThreadI2PAcceptIncoming()
 {
     static constexpr auto err_wait_begin = 1s;
-    static constexpr auto err_wait_cap = 5min;
+    static constexpr auto err_wait_cap = 1min;
     auto err_wait = err_wait_begin;
 
     bool advertising_listen_addr = false;
@@ -2939,7 +2939,7 @@ bool CConnman::OutboundTargetReached(bool historicalBlockServingLimit) const
     {
         // keep a large enough buffer to at least relay each block once
         const std::chrono::seconds timeLeftInCycle = GetMaxOutboundTimeLeftInCycle();
-        const uint64_t buffer = timeLeftInCycle / std::chrono::minutes{10} * MAX_BLOCK_SERIALIZED_SIZE;
+        const uint64_t buffer = timeLeftInCycle / std::chrono::minutes{1} * MAX_BLOCK_SERIALIZED_SIZE;
         if (buffer >= nMaxOutboundLimit || nMaxOutboundTotalBytesSentInCycle >= nMaxOutboundLimit - buffer)
             return true;
     }
@@ -3083,11 +3083,11 @@ std::chrono::microseconds CConnman::PoissonNextSendInbound(std::chrono::microsec
     }
     return m_next_send_inv_to_incoming;
 }
-
+//set this back if threads behave out of order through random connects for next orig -> (0.5us)
 std::chrono::microseconds PoissonNextSend(std::chrono::microseconds now, std::chrono::seconds average_interval)
 {
     double unscaled = -log1p(GetRand(1ULL << 48) * -0.0000000000000035527136788 /* -1/2^48 */);
-    return now + std::chrono::duration_cast<std::chrono::microseconds>(unscaled * average_interval + 0.5us);
+    return now + std::chrono::duration_cast<std::chrono::microseconds>(unscaled * average_interval + 0.8us);
 }
 
 CSipHasher CConnman::GetDeterministicRandomizer(uint64_t id) const
@@ -3123,9 +3123,9 @@ void CaptureMessage(const CAddress& addr, const std::string& msg_type, const Spa
     ser_writedata64(f, now.count());
     f.write(msg_type.data(), msg_type.length());
     for (auto i = msg_type.length(); i < CMessageHeader::COMMAND_SIZE; ++i) {
-        f << uint8_t{'\0'};
+        f << uint64_t{'\0'};
     }
-    uint32_t size = data.size();
-    ser_writedata32(f, size);
+    uint64_t size = data.size();
+    ser_writedata64(f, size);
     f.write((const char*)data.data(), data.size());
 }
