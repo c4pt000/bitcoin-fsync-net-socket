@@ -2,6 +2,10 @@
 
 # changes live in net.cpp, net.h, net_processing.cpp net_processing.h ^^^^^ of src/
 
+
+debian/fedora packages
+https://github.com/c4pt000/bitcoin/releases/tag/pkg-fedora-34-debian10-boost-175
+
 Bitcoin Core integration/staging tree
 =====================================
 
