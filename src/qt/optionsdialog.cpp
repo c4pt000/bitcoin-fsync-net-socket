@@ -103,7 +103,7 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     ui->bitcoinAtStartup->setToolTip(ui->bitcoinAtStartup->toolTip().arg(PACKAGE_NAME));
     ui->bitcoinAtStartup->setText(ui->bitcoinAtStartup->text().arg(PACKAGE_NAME));
 
-    ui->openBitcoinConfButton->setToolTip(ui->openBitcoinConfButton->toolTip().arg(PACKAGE_NAME));
+//    ui->openBitcoinConfButton->setToolTip(ui->openBitcoinConfButton->toolTip().arg(PACKAGE_NAME));
 
     ui->lang->setToolTip(ui->lang->toolTip().arg(PACKAGE_NAME));
     ui->lang->addItem(QString("(") + tr("default") + QString(")"), QVariant(""));
@@ -277,7 +277,7 @@ void OptionsDialog::setOkButtonState(bool fState)
 {
     ui->okButton->setEnabled(fState);
 }
-
+/*
 void OptionsDialog::on_resetButton_clicked()
 {
     if(model)
@@ -290,13 +290,16 @@ void OptionsDialog::on_resetButton_clicked()
         if(btnRetVal == QMessageBox::Cancel)
             return;
 
-        /* reset all options and close GUI */
+        /* reset all options and close GUI 
         model->Reset();
         close();
         Q_EMIT quitOnReset();
     }
 }
+*/
 
+
+/*
 void OptionsDialog::on_openBitcoinConfButton_clicked()
 {
     QMessageBox config_msgbox(this);
@@ -304,7 +307,7 @@ void OptionsDialog::on_openBitcoinConfButton_clicked()
     //: Window title text of pop-up box that allows opening up of configuration file.
     config_msgbox.setWindowTitle(tr("Configuration options"));
     /*: Explanatory text about the priority order of instructions considered by client.
-        The order from high to low being: command-line, configuration file, GUI settings. */
+        The order from high to low being: command-line, configuration file, GUI settings. 
     config_msgbox.setText(tr("The configuration file is used to specify advanced user options which override GUI settings. "
                              "Additionally, any command-line options will override this configuration file."));
 
@@ -316,10 +319,13 @@ void OptionsDialog::on_openBitcoinConfButton_clicked()
 
     if (config_msgbox.clickedButton() != open_button) return;
 
-    /* show an error if there was some problem opening the file */
+     show an error if there was some problem opening the file 
     if (!GUIUtil::openBitcoinConf())
         QMessageBox::critical(this, tr("Error"), tr("The configuration file could not be opened."));
 }
+*/
+
+
 
 void OptionsDialog::on_okButton_clicked()
 {
