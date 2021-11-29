@@ -2,7 +2,7 @@
 
 # changes live in net.cpp, net.h, net_processing.cpp net_processing.h ^^^^^ of src/
 
-on a 2gb prune instead of 3 days down to 15 hours or less
+# on a 2gb prune instead of 3 days down to 15 hours or less
 
 debian/fedora packages
 https://github.com/c4pt000/bitcoin/releases/tag/pkg-fedora-34-debian10-boost-175
