@@ -1,3 +1,6 @@
+# Easier to send and receive (taking Bitcoin to $100,000 on the world market easier send and receive)
+![s1](https://raw.githubusercontent.com/c4pt000/bitcoin/main/easier-to-send-and-receive.png)
+
 ![s1](https://github.com/c4pt000/bitcoin/releases/download/s_fast/vokoscreen-2021-11-24_12-11-52.gif)
 
 # changes live in net.cpp, net.h, net_processing.cpp net_processing.h ^^^^^ of src/
