@@ -1,4 +1,6 @@
-# Easier to send and receive (taking Bitcoin to $100,000 on the world market easier send and receive)
+# Easier to send and receive 
+# instead of 0.00077 BTC ---- 772 BTC $40 18 BTC -> $1 (in this example)
+# (taking Bitcoin to $100,000 on the world market easier send and receive)
 ![s1](https://raw.githubusercontent.com/c4pt000/bitcoin/main/easier-to-send-and-receive.png)
 
 ![s1](https://github.com/c4pt000/bitcoin/releases/download/s_fast/vokoscreen-2021-11-24_12-11-52.gif)
