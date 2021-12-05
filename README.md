@@ -1,5 +1,7 @@
 # Easier to send and receive 
 https://github.com/c4pt000/qr-code-kiosk-cash-register
+
+scripts on a website frontend using BTC should be updated to display mBTC by cast typing decimal output
 ```
 :::install bitcoin.conf to datadir e.g /root/.bitcoin
 
