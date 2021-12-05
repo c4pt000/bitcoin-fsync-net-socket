@@ -1,12 +1,11 @@
 # Easier to send and receive 
 https://github.com/c4pt000/qr-code-kiosk-cash-register
 ```
-install bitcoin.conf to datadir e.g /root/.bitcoin
+:::install bitcoin.conf to datadir e.g /root/.bitcoin
 
 bitcoind or bitcoin-qt
 
-then bitcoin-cli getinfo
-or 
+bitcoin-cli getinfo
 bitcoin-cli getbalance
 ::: show command line actual physical amount in wallet
 bitcoin-cli listtransactions | grep amount
