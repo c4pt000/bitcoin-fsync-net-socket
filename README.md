@@ -1,6 +1,15 @@
 # Easier to send and receive 
 https://github.com/c4pt000/qr-code-kiosk-cash-register
 
+install bitcoin.conf to datadir e.g /root/.bitcoin
+
+bitcoind or bitcoin-qt
+
+then bitcoin-cli getinfo
+or 
+bitcoin-cli getbalance
+# show command line actual physical amount in wallet
+bitcoin-cli listtransactions | grep amount
 
 # instead of 0.00077 BTC ---- 772 BTC $40 18 BTC -> $1 (in this example)
 # (taking Bitcoin to $100,000 on the world market easier send and receive)
